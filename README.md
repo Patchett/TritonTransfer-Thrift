@@ -1,4 +1,4 @@
-### TritonTransfer-Thrift RPC
+# TritonTransfer-Thrift RPC
 This project is a DropBox like block storage file redundant remote file system which uses the Thrift RPC framework.
 Each file is stored in 64 byte blocks across multiple block servers like the below diagram:
 Every block is stored on at least 2 block servers for redundancy. Each block is also hashed which allows to detect duplicate
@@ -21,17 +21,17 @@ is capable of rebuilding its index from scratch on each start.
 The Metadata Server also orchestrates uploads and downloads. The client never talks directly to a block server except when it needs to download
 a specific block. 
 
-# Downloads
+### Downloads
 To download a file, the client asks the Metadata Server which Block Server is holding the file. The Metadata Server returns
 a Block Server connection object and a list of hashes corresponding to blocks that the client needs to ask the Block Server for.
 The client then downloads each hashed block directly from the Block Server
 
-# Uploads
+### Uploads
 To upload a file, the client sends a list of file hashes to the Metadata Server in an upload request. The Metadata Server checks which blocks
 are already present on a target Block Server, and returns a list of only the hashes that are missing from that Block so that the client knows
 exactly which blocks to upload without creating duplicate blocks. The Metadata Server also orchestrates round robin uploads.
 
-# Redundancy
+### Redundancy
 Every block is stored on at least 2 Block Servers. If one Block Server goes down, all files should still be available and there should be no service interruption
 
-# Sequence Diagrams
+### Sequence Diagrams
